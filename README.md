@@ -1,4 +1,8 @@
-# Getting Started with Create React App
+# Task Manager
+
+Application for manage to daily's tasks, developed during selection process to vacancy at **Outboxup Company**.
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
