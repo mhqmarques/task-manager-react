@@ -2,6 +2,11 @@
 
 Application for manage to daily's tasks, developed during selection process to vacancy at **Outboxup Company**.
 
+## Stack
+
+This app was developed using **`React`** to frontend and the **`localstorage`** from JS api to maintain the data.
+<br>
+
 ## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
