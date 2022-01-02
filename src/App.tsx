@@ -65,7 +65,6 @@ function App() {
     setShowClosed(false)
     setShowTodo(true)
   }
-
   const handleClosed = () => {
     setShowClosed(true)
     setShowTodo(false)
@@ -100,6 +99,7 @@ function App() {
             <CardTask 
               task={task} 
               buttonContex={() => alert('worked')}
+              loadTasks={loadTasks}
             />
           ))          
         }
@@ -108,14 +108,15 @@ function App() {
             <CardTask 
               task={task} 
               buttonContex={() => alert('worked')}
+              loadTasks={loadTasks}
             />
           ))          
         }
         {
-          showTodo && listTodo.length === 0 && <C.Text>No Tasks</C.Text>
+          showTodo && listTodo.length === 0 && <C.Text>No Tasks To do.</C.Text>
         }
         {
-          showClosed && listClosed.length === 0 && <C.Text>No Tasks</C.Text>
+          showClosed && listClosed.length === 0 && <C.Text>No Tasks Closed.</C.Text>
         }
       </C.Content>
       <C.Footer>
