@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import {  useState } from 'react';
 
 import * as C from './styles'
 import { BiDotsHorizontalRounded } from "react-icons/bi";
@@ -11,13 +11,13 @@ type Props = {
   buttonContex?: () => void
 }
 
-const CardTask = ({task, buttonContex}: Props) => {
+const CardTask = ({ task, buttonContex }: Props) => {
   const [isChecked, setIsChecked] = useState<boolean>(task.done)
 
   return (
     <C.Container>
       <C.Content>
-        <C.Header>
+        <C.Header done={isChecked}>
           <input 
             type="checkbox"
             checked={isChecked}
@@ -35,7 +35,7 @@ const CardTask = ({task, buttonContex}: Props) => {
           <p>{task.description}</p>
         </C.Description>
         <C.Footer>
-          <p>Created {task.date}</p>
+          <p>Created at {task.date}</p>
         </C.Footer>
       </C.Content>
     </C.Container>

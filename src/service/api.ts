@@ -10,3 +10,13 @@ export const create = (task: Task): void => {
   tasks.push(task);
   localStorage['Tasks'] = JSON.stringify(tasks);
 }
+
+export const updateStatus = (id: number): void => {
+  const tasks = listAll();
+  tasks.forEach((task, i, arr) => {
+    if(task.id === id) {
+      arr[i].done = !task.done;
+    }
+  })
+  localStorage['Tasks'] = JSON.stringify(tasks)
+}
