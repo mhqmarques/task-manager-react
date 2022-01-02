@@ -72,7 +72,7 @@ function App() {
   return (
     <C.Container>
       <C.Header>
-        <ButtonMenu click={() => alert('funciona')}/>
+        <ButtonMenu click={() => alert('worked')}/>
         <C.Title>Tsks.</C.Title>
         <ButtonAction 
           background='#AC6DDE' 
@@ -86,7 +86,7 @@ function App() {
           <ButtonAction
             background='#414052'
             title='To do'
-            action={() => handleTodo() }
+            action={() => handleTodo()}
           />
           <ButtonAction
             background='transparent'
@@ -96,7 +96,8 @@ function App() {
         </C.ButtonArea>
         {
           showTodo  && listTodo.map((task) => (
-            <CardTask 
+            <CardTask
+              key={task.id}
               task={task} 
               buttonContex={() => alert('worked')}
               loadTasks={loadTasks}
@@ -105,7 +106,8 @@ function App() {
         }
         {
           showClosed  && listClosed.map((task) => (
-            <CardTask 
+            <CardTask
+              key={task.id}
               task={task} 
               buttonContex={() => alert('worked')}
               loadTasks={loadTasks}
