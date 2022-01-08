@@ -11,12 +11,33 @@ export const create = (task: Task): void => {
   localStorage['Tasks'] = JSON.stringify(tasks);
 }
 
+export const update = (id: number | undefined, name: string, description: string) => {
+  const tasks = listAll();
+  tasks.forEach((task, i, arr) => {
+    if(task.id === id) {
+      const taskEdited: Task = {
+        ...task,
+        name,
+        description,
+        date: new Date().toUTCString(),
+      }
+      arr[i] = taskEdited
+    };
+  });
+  localStorage['Tasks'] = JSON.stringify(tasks);
+}
+
 export const updateStatus = (id: number): void => {
   const tasks = listAll();
   tasks.forEach((task, i, arr) => {
     if(task.id === id) {
       arr[i].done = !task.done;
-    }
-  })
-  localStorage['Tasks'] = JSON.stringify(tasks)
+    };
+  });
+  localStorage['Tasks'] = JSON.stringify(tasks);
+}
+
+export const remove = (id: number) => {
+  const tasks = listAll();
+  localStorage['Tasks'] = JSON.stringify(tasks.filter((task) => task.id !== id))
 }

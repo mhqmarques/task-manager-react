@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import Modal from 'react-modal'
 
 import {Task} from './@types/Task'
@@ -37,6 +37,7 @@ function App() {
   const [showModal, setShowModal] = useState<boolean>(false)
   const [showTodo, setShowTodo] = useState<boolean>(true)
   const [showClosed, setShowClosed] = useState<boolean>(false)
+  const [taskForEdit, setTaskForEdit] = useState<Task | undefined>()
   
   useEffect(() => {
     loadTasks()
@@ -57,9 +58,17 @@ function App() {
     setListTodo(tasksTodo)
     setListClosed(tasksClosed)
   }
+
+  const editTask = (task: Task) => {
+    setTaskForEdit(task)
+    handleOpen()
+  }
  
   const handleOpen = () => setShowModal(true)
-  const handleClose = () => setShowModal(false)
+  const handleClose = () => {
+    setShowModal(false)
+    setTaskForEdit(undefined)
+  }
 
   const handleTodo = () => {
     setShowClosed(false)
@@ -84,12 +93,12 @@ function App() {
         <C.Greeting>Hi there.</C.Greeting>
         <C.ButtonArea>
           <ButtonAction
-            background='#414052'
+            background={`${showTodo ? '#414052' : 'transparent'}`}
             title='To do'
             action={() => handleTodo()}
           />
           <ButtonAction
-            background='transparent'
+            background={`${showClosed ? '#414052' : 'transparent'}`}
             title='Closed'
             action={() => handleClosed()}
           />
@@ -99,8 +108,8 @@ function App() {
             <CardTask
               key={task.id}
               task={task} 
-              buttonContex={() => alert('worked')}
               loadTasks={loadTasks}
+              editTask={() => editTask(task)}
             />
           ))          
         }
@@ -109,8 +118,8 @@ function App() {
             <CardTask
               key={task.id}
               task={task} 
-              buttonContex={() => alert('worked')}
               loadTasks={loadTasks}
+              editTask={() => editTask(task)}
             />
           ))          
         }
@@ -133,6 +142,7 @@ function App() {
         <NewTask 
           close={() => handleClose()}
           loadTasks={loadTasks}
+          taskForEdit={taskForEdit}
         />
       </Modal>
     </C.Container>

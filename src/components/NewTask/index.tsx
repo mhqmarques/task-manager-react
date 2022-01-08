@@ -10,11 +10,12 @@ import ButtonAction from '../ButtonAction';
 type NewTaskProps ={
   close: ()=>void,
   loadTasks: ()=>void
+  taskForEdit?: Task
 }
 
-const NewTask = ({close, loadTasks}: NewTaskProps) => {
-  const [nameTask, setNameTask] = useState<string>('')
-  const [descriptionTask, setDescriptionTask] = useState<string>('')
+const NewTask = ({ close, loadTasks, taskForEdit}: NewTaskProps) => {
+  const [nameTask, setNameTask] = useState<string>(`${taskForEdit ? taskForEdit.name : ''}`)
+  const [descriptionTask, setDescriptionTask] = useState<string>(`${taskForEdit ? taskForEdit.description : ''}`)
 
   const createTask = ():void => {
     const task: Task = {
@@ -25,7 +26,13 @@ const NewTask = ({close, loadTasks}: NewTaskProps) => {
       done: false,
     }
     Service.create(task)
+    alert('Sucess')
+    close()
+    loadTasks()
+  }
 
+  const editTask = () => {
+    Service.update(taskForEdit?.id, nameTask, descriptionTask)
     alert('Sucess')
     close()
     loadTasks()
@@ -42,12 +49,13 @@ const NewTask = ({close, loadTasks}: NewTaskProps) => {
       />
       </C.ContainerClose>
       <C.Content>
-        <C.Title>New Task</C.Title>
+        <C.Title>{`${taskForEdit ? 'Edit Task': 'New Task'}`}</C.Title>
         <C.ContainerInput>
           <input 
             type="text" 
             name="name" 
             placeholder='Title'
+            value={nameTask}
             onChange={(e) => setNameTask(e.target.value)}  
           />
         </C.ContainerInput>
@@ -56,15 +64,22 @@ const NewTask = ({close, loadTasks}: NewTaskProps) => {
           name="description" 
           className='description' 
           placeholder='Description'
-          rows={13}
+          value={descriptionTask}
           onChange={(e) => setDescriptionTask(e.target.value)}
+          rows={13}
         />
         </C.ContainerInput>
         <C.ContainerButton>
           <ButtonAction
             title='Save'
             background='#AC6DDE'
-            action={() => createTask()}
+            action={() => {
+              if(taskForEdit) {
+                editTask()
+              } else {
+                createTask()
+              }
+            }}
           />
         </C.ContainerButton>
 

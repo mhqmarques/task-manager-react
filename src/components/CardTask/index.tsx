@@ -1,27 +1,32 @@
 
-import React, {  useState } from 'react';
-
-import * as C from './styles'
+import {  useState } from 'react';
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 
+import * as C from './styles'
 import {Task} from '../../@types/Task';
-import {updateStatus} from '../../service/api'
+import * as Service from '../../service/api'
+import DropdownMenu from '../DropdownMenu/index'
 
 type Props = {
   task: Task,
-  buttonContex?: () => void
-  loadTasks: () => void
+  loadTasks: () => void,
+  editTask: () => void
 }
 
-const CardTask = ({ task, buttonContex, loadTasks }: Props) => {
+const CardTask = ({ task, loadTasks, editTask }: Props) => {
   const [isChecked, setIsChecked] = useState<boolean>(task.done)
+  const [openDropdown, setOpenDropdown] = useState<boolean>(false)
 
   const updateStatusTask = () => {
     setIsChecked(!task.done)
-    updateStatus(task.id)
+    Service.updateStatus(task.id)
     setTimeout(() => loadTasks(), 200)
   }
-  
+
+  const deleteTask = () => {
+    Service.remove(task.id)
+    loadTasks()
+  }
 
   return (
     <C.Container>
@@ -37,8 +42,9 @@ const CardTask = ({ task, buttonContex, loadTasks }: Props) => {
             color='#AC6DDE' 
             size={26} 
             className='contextMenu'
-            onClick={buttonContex}  
-          />
+            onClick={() => setOpenDropdown(!openDropdown)}  
+            />
+          {openDropdown && <DropdownMenu editTask={editTask} deleteTask={() => deleteTask()} key={task.id} />}
         </C.Header>
         <C.Description>
           <p>{task.description}</p>
